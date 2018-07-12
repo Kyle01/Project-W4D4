@@ -2,11 +2,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    if @user.save!
+    if @user.save
       log_in_user!(@user)
+      redirect_to new_session_url
     else
       flash.now[:errors] = @user.errors.full_messages
-      render :new
+      redirect_to new_user_url
     end
   end
 
@@ -14,10 +15,9 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def reset_session_token!
-    self.session_token = SecureRandom.urlsafe_base64
-    self.save!
-    self.session_token
+  def show
+    @user = User.find(params[:id])
+    render :show
   end
 
   private
