@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
     end
   end
 
-  def destory
+  def destroy
     sign_out
     render :new
   end
